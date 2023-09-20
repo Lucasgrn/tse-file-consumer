@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model candi {
+  DT_GERACAO                String?
+  HH_GERACAO                String?
+  ANO_ELEICAO               BigInt?
+  CD_TIPO_ELEICAO           BigInt?
+  NM_TIPO_ELEICAO           String?
+  NR_TURNO                  BigInt?
+  CD_ELEICAO                BigInt?
+  DS_ELEICAO                String?
+  DT_ELEICAO                String?
+  TP_ABRANGENCIA            String?
+  SG_UF                     String?
+  SG_UE                     String?
+  NM_UE                     String?
+  CD_MUNICIPIO              BigInt?
+  NM_MUNICIPIO              String?
+  NR_ZONA                   BigInt?
+  CD_CARGO                  BigInt?
+  DS_CARGO                  String?
+  SQ_CANDIDATO              BigInt?
+  NR_CANDIDATO              BigInt?
+  NM_CANDIDATO              String?
+  NM_URNA_CANDIDATO         String?
+  NM_SOCIAL_CANDIDATO       String?
+  CD_SITUACAO_CANDIDATURA   BigInt?
+  DS_SITUACAO_CANDIDATURA   String?
+  CD_DETALHE_SITUACAO_CAND  BigInt?
+  DS_DETALHE_SITUACAO_CAND  String?
+  TP_AGREMIACAO             String?
+  NR_PARTIDO                BigInt?
+  SG_PARTIDO                String?
+  NM_PARTIDO                String?
+  NR_FEDERACAO              BigInt?
+  NM_FEDERACAO              String?
+  SG_FEDERACAO              String?
+  DS_COMPOSICAO_FEDERACAO   String?
+  SQ_COLIGACAO              BigInt?
+  NM_COLIGACAO              String?
+  DS_COMPOSICAO_COLIGACAO   String?
+  ST_VOTO_EM_TRANSITO       String?
+  QT_VOTOS_NOMINAIS         BigInt?
+  NM_TIPO_DESTINACAO_VOTOS  String?
+  QT_VOTOS_NOMINAIS_VALIDOS BigInt?
+  CD_SIT_TOT_TURNO          BigInt?
+  DS_SIT_TOT_TURNO          String?
+  id                        Int     @id @default(autoincrement())
+}

@@ -1,8 +1,8 @@
 {
-  "name": "tse-api-consumer",
+  "name": "tse-file-consumer",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -18,7 +18,6 @@
   },
   "dependencies": {
     "@prisma/client": "^5.2.0",
-    "axios": "^1.4.0",
     "express": "^4.18.2"
   }
 }

@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 import { Request, Response } from "express";
+import { filter, somarVotos } from "../services/filter.js";
 
 export const getAllCities = async (req: Request, res: Response) => {
   const { municipio } = req.params
@@ -10,18 +11,7 @@ export const getAllCities = async (req: Request, res: Response) => {
         'NM_MUNICIPIO': municipio
       }
     })
-    const filtredData = []
-    for (const line of data) {
-      const filter = {
-        candidato: line.NM_URNA_CANDIDATO,
-        partido: line.NM_PARTIDO,
-        cargo: line.DS_CARGO,
-        votos: parseInt(line.QT_VOTOS_NOMINAIS_VALIDOS?.toString() || "0"),
-        zona: line.NR_ZONA?.toString(),
-        municipio: line.NM_MUNICIPIO
-      }
-      filtredData.push(filter)
-    }
+    const filtredData = filter(data)
     return res.status(200).json(filtredData)
   } catch (error) {
 
@@ -37,29 +27,8 @@ export const filterByCandidate = async (req: Request, res: Response) => {
         NM_MUNICIPIO: municipio
       }
     })
-    const filtredData = []
-    for (const line of data) {
-      const filter = {
-        candidato: line.NM_URNA_CANDIDATO,
-        partido: line.NM_PARTIDO,
-        cargo: line.DS_CARGO,
-        votos: parseInt(line.QT_VOTOS_NOMINAIS_VALIDOS?.toString() || "0"),
-        turno: line.NR_TURNO?.toString(),
-        zona: line.NR_ZONA?.toString(),
-        municipio: line.NM_MUNICIPIO
-      }
-      filtredData.push(filter)
-    }
-    let totalVotos = 0
-    let totalVotosSegundoTurno = 0
-    for (let i = 0; i < filtredData.length; i++) {
-      if (filtredData[i].turno == "1") {
-        totalVotos = totalVotos + filtredData[i].votos
-      }
-      if (filtredData[i].turno == "2") {
-        totalVotosSegundoTurno = totalVotosSegundoTurno + filtredData[i].votos
-      }
-    }
+    const filtredData = filter(data)
+    const { totalVotos, totalVotosSegundoTurno } = somarVotos(filtredData)
     return res.status(200).json({ filtredData, totalVotos, totalVotosSegundoTurno })
   } catch (error) {
     console.log(error)
